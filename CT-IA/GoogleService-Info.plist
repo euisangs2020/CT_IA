@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>893166151899-sgkk5dd1at82n4soo1mtemqvcmr0q9sp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.893166151899-sgkk5dd1at82n4soo1mtemqvcmr0q9sp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBMdrPxmavDzQP9vvYNZLsKCpgss3lOZmw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>893166151899</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>cis.edu.CT-IA</string>
+	<key>PROJECT_ID</key>
+	<string>ct-ia-22626</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ct-ia-22626.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:893166151899:ios:ca61f653a27d0407</string>
+	<key>DATABASE_URL</key>
+	<string>https://ct-ia-22626.firebaseio.com</string>
+</dict>
+</plist>
