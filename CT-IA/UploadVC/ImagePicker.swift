@@ -1,28 +1,43 @@
 import UIKit
  
-class ImagePicker: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource {
+class ImagePicker: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    @IBOutlet var tableView: UITableView!
-    // selected is the UILabel for the Cell where the UIImagePicker is
-    @IBOutlet var selected: UILabel!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var selectImageB: UIButton!
+    @IBOutlet var header: UILabel!
+    @IBOutlet weak var imageTitle: UITextField!
     
     let imagePicker = UIImagePickerController()
     
-    let input:[String] = ["name", "contact", "loc", "bio", "industry"]
+    var imageViewWidth:CGFloat?
     
     var image:UIImage?
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
-        imagePicker.delegate = self
         
-        tableView.dataSource = self
+        header.text = "Choose Image"
+        header.textColor = .black
+        header.isHidden = false
+        
+        imageView.contentMode = .scaleAspectFill
+        imageViewWidth = imageView.frame.width
+        let placeholder = UIImage(named: "placeholder.png")
+        imageView.image = resizeImage(placeholder!, imageViewWidth!)
+        
+        selectImageB.isEnabled = false
+        
+        imagePicker.delegate = self
     }
     
-    // MARK: - UIImagePickerControllerDelegate Methods
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        view.endEditing(true)
+    }
     
+    /// Presents the image picking view when selectImageB is prsesed
+    /// - Parameter sender: UIButton
     @IBAction func pressedSelectedImageB(_ sender: UIButton)
     {
         imagePicker.allowsEditing = true
@@ -31,48 +46,73 @@ class ImagePicker: UIViewController, UIImagePickerControllerDelegate, UINavigati
         present(imagePicker, animated: true, completion: nil)
     }
     
+    /// When image is chosen by user after the above function, the image is saved to variable "image"
+    /// - Parameters:
+    ///   - picker: Picker
+    ///   - info: Information of the selected image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
     {
         image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
-        selected.text = "Selected"
+//        imageView.image = resizeImage(image!, imageViewWidth!)
+        imageView.image = image!
         dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "UploadImage", sender: self)
     }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
+    /// If the user cancels the image choosing process
+    /// - Parameter picker: Picker
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) { dismiss(animated: true, completion: nil) }
     
-    // MARK: - TableViewController Methods
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    @IBAction func imageTitleEdited(_ sender: UITextField)
     {
-        return input.count+2
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
-        print(indexPath.row)
-        switch indexPath.row
+        if imageTitle.text != ""
         {
-        case 0:
-            let cell:SelectImageCell = tableView.dequeueReusableCell(withIdentifier: "SelectImageCell", for: indexPath) as! SelectImageCell
-            cell.label.text = "Photo"
-            return cell
-            
-        case input.count+1:
-            let cell:SubmitCell = tableView.dequeueReusableCell(withIdentifier: "SubmitCell", for: indexPath) as! SubmitCell
-            return cell
-            
-        default:
-            let cell:InsertInfoCell = tableView.dequeueReusableCell(withIdentifier: "InsertInfoCell", for: indexPath) as! InsertInfoCell
-            cell.label.text = input[indexPath.row-1]
-            return cell
+            selectImageB.isEnabled = true
         }
     }
     
-    @IBAction func submitB(_ sender: UIButton)
-    {
-        
-    }
     
+    /// Preparing for segue, sends image variable to UploadImage for uploading to Firebase storage
+    /// - Parameters:
+    ///   - segue: the segue
+    ///   - sender: nextViewB
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        let receiverVC = segue.destination as! UploadImage
+        receiverVC.image = image
+        receiverVC.imageTitle = imageTitle.text!
+    }
+   /*
+    /// Determining whether the segue should be done based on whether an image has been chosen
+    /// - Parameters:
+    ///   - identifier: Segue identifier
+    ///   - sender: nextViewB
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool
+    {
+        if image == nil
+        {
+            let alert = UIAlertController(title: "My Alert", message: "This is an alert.", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+//            NSLog("The \"OK\" alert occured.")
+            self.present(alert, animated: true, completion: nil)
+            return false
+        }
+        return true
+    }*/
+    
+    /// Function that gets an image and resizes it to a certain dimension, reducing size to fit screen but maintaining clarity
+    /// - Parameters:
+    ///   - image: image
+    ///   - newWidth: the desired width of the image, usually the width of UITableViewCell
+    func resizeImage(_ image: UIImage, _ newWidth: CGFloat) -> UIImage
+    {
+        let scale = newWidth / image.size.width
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        return newImage
+    }
 }

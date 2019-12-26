@@ -76,7 +76,7 @@ class AlumProfile:ContentDisplayer
                 let cell:AlumCell = tableView.dequeueReusableCell(withIdentifier: "AlumCell", for: indexPath) as! AlumCell
                 
                 cell.name.text = alum.name
-                cell.textTwo.text = alum.loc
+                cell.textTwo.text = "\(String(describing: alum.loc)), \(String(describing: alum.contact))"
                 
                 // Getting a reference of a random photo for given alumni
                 let reference = storageRef!.child("Alum_profile_pic/\( alum.name!).jpg")
