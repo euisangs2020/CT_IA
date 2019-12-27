@@ -28,7 +28,7 @@ class AlumCell:UITableViewCell
 
 /* The below Cells are used for uploading images */
 
-/// Cell for choosing image and showing image selection status
+/// Cell for choosing profile image
 class SelectImageCell:UITableViewCell
 {
     @IBOutlet weak var label: UILabel!
@@ -60,6 +60,10 @@ class PickerCell:UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource
     }
     
     // MARK: UIPickerView
+    
+    // A component is the number of wheels in a UIPickerView
+    // Rows are the options in a component
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int
     {
         return 1

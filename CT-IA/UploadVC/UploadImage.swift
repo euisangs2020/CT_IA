@@ -30,13 +30,16 @@ class UploadImage: UITableViewController, UIImagePickerControllerDelegate, UINav
     {
         imagePicker.delegate = self
     }
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool)
+    {
         // Since this point in code marks the state when all appropriate visible cells except SubmitCells are loaded, the text of the UITextFields or image is pre-loaded to prevent user having to enter duplicate information
         loadPrevInfo()
     }
     
-    //MARK: UIImagePickerControllerDelegate Functions
+    // MARK: UIImagePickerControllerDelegate Functions
     
+    /// Displays the UIImagePicker
+    /// - Parameter sender: Clicking the "select" image
     @IBAction func selectProPic(_ sender: UIButton)
     {
         imagePicker.allowsEditing = true
@@ -48,6 +51,10 @@ class UploadImage: UITableViewController, UIImagePickerControllerDelegate, UINav
     /// - Parameter picker: Picker
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) { dismiss(animated: true, completion: nil) }
     
+    /// Saving the selected image from the UIImagePicker and dismissing UIImagePicker
+    /// - Parameters:
+    ///   - picker: UIImagePicker
+    ///   - info: info of the image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
     {
         proPicImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
@@ -56,16 +63,31 @@ class UploadImage: UITableViewController, UIImagePickerControllerDelegate, UINav
     
     //MARK: UITableViewController Functions
     
+    /// Setting the number of rows
+    /// The number of rows is set to 'labels.count+2' because there is an additional 2 rows, due to the SelectImageCell and SubmitCell
+    /// - Parameters:
+    ///   - tableView: self
+    ///   - section: section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return labels.count+2
     }
     
+    /// Loading the table
+    /// Called after the table row number is confirmed from tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
+    /// - Parameters:
+    ///   - tableView: self
+    ///   - indexPath: The row number
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let lastRow = tableView.numberOfRows(inSection: 0)-1
 
-        // Loading correct cell object for given row, setting labels
+        // Loading correct cell object for given row, setting labels.
+        //
+        // Row 0:   SelectImageCell
+        // Row 1-4: InsertInfoCell
+        // Row 5:   PickerCell
+        // Row 6:   SubmitCell
         switch indexPath.row
         {
         case 0:
@@ -94,6 +116,8 @@ class UploadImage: UITableViewController, UIImagePickerControllerDelegate, UINav
     
     //MARK: Submission to local disk and Firebase/store via FireUpload class
     
+    /// Displays an alert with the appropriate text
+    /// - Parameter text: The error message
     func showAlert(_ text:String)
     {
         let alert = UIAlertController(title: "Missing Info", message: text, preferredStyle: .alert)
@@ -103,6 +127,8 @@ class UploadImage: UITableViewController, UIImagePickerControllerDelegate, UINav
         self.present(alert, animated: true, completion: nil)
     }
     
+    /// When the submit button is pressed
+    /// - Parameter sender: The submit UIButton
     @IBAction func submitB(_ sender: UIButton)
     {
         /// Variable to check if all fields have been entered
@@ -175,6 +201,7 @@ class UploadImage: UITableViewController, UIImagePickerControllerDelegate, UINav
         }
     }
     
+    /// Load previously inputted information, if any, to cells
     func loadPrevInfo()
     {
         let lastRow = tableView.numberOfRows(inSection: 0)-1
@@ -189,6 +216,7 @@ class UploadImage: UITableViewController, UIImagePickerControllerDelegate, UINav
                     let cell = tableView.cellForRow(at: indexPath) as! SelectImageCell
                     cell.selectProPic.titleLabel?.text = "Reselect"
                 }
+            // PickerCell
             case lastRow-1:
                 let key = labels[indexPath.row-1].lowercased()
                 let item = getData(forKey: key) as? String
@@ -213,11 +241,15 @@ class UploadImage: UITableViewController, UIImagePickerControllerDelegate, UINav
         }
     }
     
+    /// Get local data from UserDefaults for given key
+    /// - Parameter forKey: The key to which the data is saved
     func getData(forKey:String) -> Any?
     {
         return UserDefaults.standard.object(forKey: forKey)
     }
     
+    /// Save data to UserDefaults (local storage) for given key
+    /// - Parameter forKey: The key to which the data is saved
     func setData(_ variable:Any?, forKey:String)
     {
         UserDefaults.standard.set(variable, forKey: forKey)

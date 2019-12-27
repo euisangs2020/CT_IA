@@ -11,26 +11,33 @@ class ImagePicker: UIViewController, UIImagePickerControllerDelegate, UINavigati
     
     var imageViewWidth:CGFloat?
     
+    /// The image that will be added to the alum's profile
     var image:UIImage?
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
+        // Making the header visible with specified String
         header.text = "Choose Image"
         header.textColor = .black
         header.isHidden = false
         
+        // Setting the conditions and placeholder image for imageView
         imageView.contentMode = .scaleAspectFill
         imageViewWidth = imageView.frame.width
         let placeholder = UIImage(named: "placeholder.png")
-        imageView.image = resizeImage(placeholder!, imageViewWidth!)
+        imageView.image = ImagePicker.resizeImage(placeholder!, imageViewWidth!)
         
         selectImageB.isEnabled = false
         
         imagePicker.delegate = self
     }
     
+    /// A function override to make the keyboard disappear once clicking outside the keyboard area
+    /// - Parameters:
+    ///   - touches: Touching the screen outside of the keyboard
+    ///   - event: UIEvent
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
         view.endEditing(true)
@@ -53,7 +60,6 @@ class ImagePicker: UIViewController, UIImagePickerControllerDelegate, UINavigati
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
     {
         image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
-//        imageView.image = resizeImage(image!, imageViewWidth!)
         imageView.image = image!
         dismiss(animated: true, completion: nil)
         performSegue(withIdentifier: "UploadImage", sender: self)
@@ -71,7 +77,6 @@ class ImagePicker: UIViewController, UIImagePickerControllerDelegate, UINavigati
         }
     }
     
-    
     /// Preparing for segue, sends image variable to UploadImage for uploading to Firebase storage
     /// - Parameters:
     ///   - segue: the segue
@@ -82,29 +87,13 @@ class ImagePicker: UIViewController, UIImagePickerControllerDelegate, UINavigati
         receiverVC.image = image
         receiverVC.imageTitle = imageTitle.text!
     }
-   /*
-    /// Determining whether the segue should be done based on whether an image has been chosen
-    /// - Parameters:
-    ///   - identifier: Segue identifier
-    ///   - sender: nextViewB
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool
-    {
-        if image == nil
-        {
-            let alert = UIAlertController(title: "My Alert", message: "This is an alert.", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-//            NSLog("The \"OK\" alert occured.")
-            self.present(alert, animated: true, completion: nil)
-            return false
-        }
-        return true
-    }*/
     
     /// Function that gets an image and resizes it to a certain dimension, reducing size to fit screen but maintaining clarity
+    /// Static to allow children of ContentDisplayer to also use function
     /// - Parameters:
     ///   - image: image
     ///   - newWidth: the desired width of the image, usually the width of UITableViewCell
-    func resizeImage(_ image: UIImage, _ newWidth: CGFloat) -> UIImage
+    static func resizeImage(_ image: UIImage, _ newWidth: CGFloat) -> UIImage
     {
         let scale = newWidth / image.size.width
         let newHeight = image.size.height * scale

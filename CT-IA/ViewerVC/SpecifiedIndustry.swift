@@ -20,18 +20,22 @@ class SpecifiedIndustryTB_Controller: ContentDisplayer
     override func viewDidLoad()
     {
         // Collection refers to the collection of alums in the specified industry
-        colRef = Firestore.firestore().collection(Path.liveDB.COL!)
+        colRef = Firestore.firestore().collection(DB.live.COL!)
         
         // Get all the data
-        loadData()
+        getPackages()
         
         //initialise storageRef
         storageRef = Storage.storage().reference()
         
-        label.text = Path.liveDB.COL!
+        label.text = DB.live.COL!
     }
     
-    
+    /// Loading the table
+    /// Called after the table row number is confirmed from tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
+    /// - Parameters:
+    ///   - tableView: self
+    ///   - indexPath: The row number
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         //creating cell instance
@@ -66,7 +70,7 @@ class SpecifiedIndustryTB_Controller: ContentDisplayer
                     // Asynchronous process used to make operation faster
                     DispatchQueue.main.async
                     {
-                        cell.mainImg.image = self.resizeImage(image!, cell.frame.width)
+                        cell.mainImg.image = ImagePicker.resizeImage(image!, cell.frame.width)
                     }
                 }
             }
@@ -75,14 +79,14 @@ class SpecifiedIndustryTB_Controller: ContentDisplayer
         return cell
     }
     
+    /// Action when an image is clicked
+    /// Transition to the next ViewController, showing the works of alumni in the selected industry
+    /// - Parameters:
+    ///   - tableView: self
+    ///   - indexPath: The row number
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        Path.liveDB.DOC = (tableView.cellForRow(at: indexPath) as! BasicCell).title
+        DB.live.DOC = (tableView.cellForRow(at: indexPath) as! BasicCell).title
         performSegue(withIdentifier: "AlumProfile_Controller", sender: indexPath)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        let receiverVC = segue.destination as! AlumProfile
     }
 }

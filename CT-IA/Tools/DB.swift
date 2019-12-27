@@ -8,17 +8,19 @@
 
 import Foundation
 
-class Path
+/// Values of the collection and document, if valid
+class DB
 {
-    struct liveDB
+    /// Values of the current collection and document that the user is in
+    struct live
     {
         static var COL:String?
         static var DOC:String?
     }
     
-    struct industryDB
+    /// Fixed value of the collection for viewing the list of viable industries.
+    struct industries
     {
         static let COL = "Industries"
-        static let DOC = "Names"
     }
 }

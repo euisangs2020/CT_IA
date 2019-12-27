@@ -11,23 +11,25 @@ import Firebase
 import FirebaseStorage
 import SDWebImage
 
+/// The first ViewController; shows the selection of industries with an image each in a TableView
 class IndustriesTV_Controller: ContentDisplayer
 {
     override func viewDidLoad()
     {
         // Set predefined industry collection
-        colRef = Firestore.firestore().collection(Path.industryDB.COL)
+        colRef = Firestore.firestore().collection(DB.industries.COL)
         
-        // Get all the data
-        loadData()
+        // Get all the documents as Packages
+        getPackages()
         
         //initialise storageRef
         storageRef = Storage.storage().reference()
     }
     
-    /// Loading the table, called after the table row number is confirmed from tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
+    /// Loading the table
+    /// Called after the table row number is confirmed from tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
     /// - Parameters:
-    ///   - tableView: The table in question
+    ///   - tableView: self
     ///   - indexPath: The row number
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
@@ -62,7 +64,7 @@ class IndustriesTV_Controller: ContentDisplayer
                     // Asynchronous process used to make operation faster
                     DispatchQueue.main.async
                     {
-                        cell.mainImg.image = self.resizeImage(image!, cell.frame.width)
+                        cell.mainImg.image = ImagePicker.resizeImage(image!, cell.frame.width)
                     }
                 }
             }
@@ -71,18 +73,14 @@ class IndustriesTV_Controller: ContentDisplayer
         return cell
     }
     
-    /// <#Description#>
+    /// Action when an image is clicked
+    /// Transition to the next ViewController, showing the works of alumni in the selected industry
     /// - Parameters:
-    ///   - tableView: <#tableView description#>
-    ///   - indexPath: <#indexPath description#>
+    ///   - tableView: self
+    ///   - indexPath: The row number
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        Path.liveDB.COL = (tableView.cellForRow(at: indexPath) as! BasicCell).title
+        DB.live.COL = (tableView.cellForRow(at: indexPath) as! BasicCell).title
         performSegue(withIdentifier: "SpecifiedIndustry_Controller", sender: indexPath)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        let receiverVC = segue.destination as! SpecifiedIndustryTB_Controller
     }
 }

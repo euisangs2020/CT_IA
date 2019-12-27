@@ -30,6 +30,13 @@ class FireUpload
         }
     }
     
+    /// The  method for uploading/saving specific information locally and to Firebase and Firebase Storage
+    /// - Parameters:
+    ///   - object: The object to be saved
+    ///   - objects: All the objects that have been or will be saved by the end of the mainUpload() call
+    ///   - key: The key to which this object will be saved; a field descriptor of the object
+    ///   - keys: All the keys to which all objects have been or will be saved by the end of the mainUpload() call
+    ///   - isProPic: Boolean of whether the object is the profile picture
     private func updateField(_ object:Any, _ objects:[Any], key:String, keys:[String], isProPic:Bool)
     {
         let localData = getLocal(forKey: key)
@@ -40,14 +47,8 @@ class FireUpload
         case nil:
             if object is UIImage
             {
-                if isProPic
-                {
-                    uni_saveProPic(name: name, object as! UIImage)
-                }
-                else
-                {
-                    uni_saveImage(name: name, imageTitle: key, object as! UIImage, industry: industry)
-                }
+                if isProPic { uni_saveProPic(name: name, object as! UIImage) }
+                else { uni_saveImage(name: name, imageTitle: key, object as! UIImage, industry: industry) }
             }
             else
             {
@@ -56,48 +57,27 @@ class FireUpload
                 // industry/name
                 let docRef = Firestore.firestore().collection(industry).document(name)
                 
-                if key == name
-                {
-                    createDoc(object, key: key, docRef: docRef)
-                }
-                else
-                {
-                    updateDoc(object, key: key, docRef: docRef)
-                }
+                if key == name { createDoc(object, key: key, docRef: docRef) }
+                else { updateDoc(object, key: key, docRef: docRef) }
                 
                 saveLocal(object, forKey: key)
             }
         default:
             if object is UIImage
             {
-                if UIImage(data: localData as! Data) == object as? UIImage
-                {
-                    break
-                }
-                else if isProPic
-                {
-                    uni_saveProPic(name: name, object as! UIImage)
-                }
-                else
-                {
-                    uni_saveImage(name: name, imageTitle: key, object as! UIImage, industry: industry)
-                }
+                if UIImage(data: localData as! Data) == object as? UIImage { break }
+                else if isProPic { uni_saveProPic(name: name, object as! UIImage) }
+                else { uni_saveImage(name: name, imageTitle: key, object as! UIImage, industry: industry) }
             }
             else
             {
-                if localData as! String == object as! String
-                {
-                    break
-                }
+                if localData as! String == object as! String { break }
                 else
                 {
                     // industry/name
                     let docRef = Firestore.firestore().collection(industry).document(name)
                     
-                    if key == "name"
-                    {
-                        createDoc(object, key: key, docRef: docRef)
-                    }
+                    if key == "name" { createDoc(object, key: key, docRef: docRef) }
                     else { updateDoc(object, key: key, docRef: docRef) }
                 }
             }

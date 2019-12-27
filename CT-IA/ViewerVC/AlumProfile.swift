@@ -15,10 +15,10 @@ class AlumProfile:ContentDisplayer
 {
     override func viewDidLoad()
     {
-        let colRef = Firestore.firestore().collection(Path.liveDB.COL!)
+        let colRef = Firestore.firestore().collection(DB.live.COL!)
         
         // Gets the specific alumni's data
-        colRef.whereField("name", isEqualTo: Path.liveDB.DOC!)
+        colRef.whereField("name", isEqualTo: DB.live.DOC!)
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
@@ -34,17 +34,14 @@ class AlumProfile:ContentDisplayer
                 }
         }
             
-        //initialise storageRef
+        // Initialise storageRef
         storageRef = Storage.storage().reference()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        // Number of images that the selected alum has, +1, for the alum profile cell at the start
-        if allData.isEmpty
-        {
-            return 1
-        }
+        // Number of images that the selected alum has, +1, accomodating for the alum profile cell at the start
+        if allData.isEmpty { return 1 }
         else
         {
             isLoading = false
@@ -52,9 +49,13 @@ class AlumProfile:ContentDisplayer
         }
     }
     
+    /// Loading the table
+    /// Called after the table row number is confirmed from tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
+    /// - Parameters:
+    ///   - tableView: self
+    ///   - indexPath: The row number
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        
         if isLoading
         {
             let cell:BasicCell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath) as! BasicCell
@@ -72,7 +73,7 @@ class AlumProfile:ContentDisplayer
             // For the first UITableViewCell, use AlumCell to display basic alum info
             if indexPath.row == 0
             {
-                //creating cell instance
+                // Creating cell instance
                 let cell:AlumCell = tableView.dequeueReusableCell(withIdentifier: "AlumCell", for: indexPath) as! AlumCell
                 
                 cell.name.text = alum.name
@@ -90,17 +91,17 @@ class AlumProfile:ContentDisplayer
                         // Asynchronous process used to make operation faster
                         DispatchQueue.main.async
                         {
-                            cell.profilePic.image = self.resizeImage(image!, cell.frame.width)
+                            cell.profilePic.image = ImagePicker.resizeImage(image!, cell.frame.width)
                         }
                     }
                 }
                 
                 return cell
             }
-            // For all following rows, just creating additional pure images
+            // For all subsequent rows, just creating additional pure images
             else
             {
-                //creating cell instance
+                // Creating cell instance
                 let cell:BasicCell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath) as! BasicCell
                 
                 cell.mainImg.contentMode = .scaleAspectFill
@@ -117,7 +118,7 @@ class AlumProfile:ContentDisplayer
                         // Asynchronous process used to make operation faster
                         DispatchQueue.main.async
                         {
-                            cell.mainImg.image = self.resizeImage(image!, cell.frame.width)
+                            cell.mainImg.image = ImagePicker.resizeImage(image!, cell.frame.width)
                         }
                     }
                 }

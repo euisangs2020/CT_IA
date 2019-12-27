@@ -19,19 +19,13 @@ class ContentDisplayer: UITableViewController
     var colRef:CollectionReference?
     var storageRef:StorageReference?
     
-    var nextVC:UIViewController?
-    var nextVC_Id:String?
-    
     /// Boolean showing whether the images are still being fetched
     var isLoading:Bool = true
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         // For when the data is not fetched yet
-        if allData.isEmpty
-        {
-            return 1
-        }
+        if allData.isEmpty { return 1 }
         else
         {
             isLoading = false
@@ -39,19 +33,20 @@ class ContentDisplayer: UITableViewController
         }
     }
     
-    func loadData()
+    /// Retreives documents of colRef to allData as 'Package'
+    func getPackages()
     {
         colRef?.getDocuments(){
             (data, err) in
             if let err = err {
                 print("oh no! \(err)")
-            } else {
-                for document in data!.documents {
-                    self.initData(document.data())
-                }
+            }
+            else
+            {
+                for document in data!.documents { self.initData(document.data()) }
             }
             
-            //Makes sure that this reloads the tableView on the main thread
+            //Makes sure that this reloads the tableView on the main thread once the document has been retrieved
             DispatchQueue.main.async
             {
                 self.tableView.reloadData()
@@ -59,6 +54,8 @@ class ContentDisplayer: UITableViewController
         }
     }
     
+    /// Initialise the retrieved document as Package
+    /// - Parameter data: The document
     func initData(_ data: Dictionary<String, Any>)
     {
         let package:Package = Package()
@@ -85,22 +82,10 @@ class ContentDisplayer: UITableViewController
         allData.append(package)
     }
     
-    /// Function that gets an image and resizes it to a certain dimension, reducing size to fit screen but maintaining clarity
+    /// Forcing the tableCell height to its width, accomodating for 1:1 UIImageViews
     /// - Parameters:
-    ///   - image: image
-    ///   - newWidth: the desired width of the image, usually the width of UITableViewCell
-    func resizeImage(_ image: UIImage, _ newWidth: CGFloat) -> UIImage
-    {
-        let scale = newWidth / image.size.width
-        let newHeight = image.size.height * scale
-        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
-        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-
-        return newImage
-    }
-    
+    ///   - tableView: self
+    ///   - indexPath: The row number
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
             return tableView.frame.width

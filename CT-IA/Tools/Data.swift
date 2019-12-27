@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// A data storage format used for the children of ContentDisplayer
+/// Each Package represents/contains the data for one alumnus
 class Package
 {
     var name:String? = nil
