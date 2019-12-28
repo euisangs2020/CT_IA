@@ -166,13 +166,6 @@ class FireUpload
     {
         // Upload the file to the path "images/rivers.jpg"
         let uploadTask = ref.putData(data, metadata: nil)
-        
-        uploadTask.observe(.progress) { snapshot in
-          // Upload reported progress
-          let percentComplete = 100.0 * Double(snapshot.progress!.completedUnitCount)
-            / Double(snapshot.progress!.totalUnitCount)
-            print(percentComplete)
-        }
 
         uploadTask.observe(.success) { snapshot in
           print("Image Uploaded")

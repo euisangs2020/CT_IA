@@ -11,7 +11,7 @@ import Firebase
 import FirebaseUI
 import FirebaseStorage
 
-class SpecifiedIndustryTB_Controller: ContentDisplayer
+class SpecifiedIndustry: ContentDisplayer
 {
     
     /// Label of industry name at the top of screen

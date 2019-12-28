@@ -12,7 +12,7 @@ import FirebaseStorage
 import SDWebImage
 
 /// The first ViewController; shows the selection of industries with an image each in a TableView
-class IndustriesTV_Controller: ContentDisplayer
+class Industries: ContentDisplayer
 {
     override func viewDidLoad()
     {

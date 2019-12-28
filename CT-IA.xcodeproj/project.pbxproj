@@ -10,7 +10,7 @@
 		02081D6823A0C37F00BBEC9E /* GifLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02081D6723A0C37F00BBEC9E /* GifLoader.swift */; };
 		020F4C8E2357F626001A5541 /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4C8D2357F626001A5541 /* DB.swift */; };
 		022F6DDC22AF64DE00FADB75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022F6DDB22AF64DE00FADB75 /* AppDelegate.swift */; };
-		022F6DDE22AF64DE00FADB75 /* IndustryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022F6DDD22AF64DE00FADB75 /* IndustryVC.swift */; };
+		022F6DDE22AF64DE00FADB75 /* Industries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022F6DDD22AF64DE00FADB75 /* Industries.swift */; };
 		022F6DE022AF64DE00FADB75 /* SpecifiedIndustry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022F6DDF22AF64DE00FADB75 /* SpecifiedIndustry.swift */; };
 		022F6DE322AF64DE00FADB75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 022F6DE122AF64DE00FADB75 /* Main.storyboard */; };
 		022F6DE522AF64E000FADB75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 022F6DE422AF64E000FADB75 /* Assets.xcassets */; };
@@ -54,7 +54,7 @@
 		020F4C8D2357F626001A5541 /* DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		022F6DD822AF64DE00FADB75 /* CT-IA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CT-IA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		022F6DDB22AF64DE00FADB75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		022F6DDD22AF64DE00FADB75 /* IndustryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustryVC.swift; sourceTree = "<group>"; };
+		022F6DDD22AF64DE00FADB75 /* Industries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Industries.swift; sourceTree = "<group>"; };
 		022F6DDF22AF64DE00FADB75 /* SpecifiedIndustry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecifiedIndustry.swift; sourceTree = "<group>"; };
 		022F6DE222AF64DE00FADB75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		022F6DE422AF64E000FADB75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 		02DAA56D235946CE00ADA45E /* ViewerVC */ = {
 			isa = PBXGroup;
 			children = (
-				022F6DDD22AF64DE00FADB75 /* IndustryVC.swift */,
+				022F6DDD22AF64DE00FADB75 /* Industries.swift */,
 				022F6DDF22AF64DE00FADB75 /* SpecifiedIndustry.swift */,
 				02C93304233C4E2B006FDE9C /* AlumProfile.swift */,
 			);
@@ -488,7 +488,7 @@
 				022F6DDC22AF64DE00FADB75 /* AppDelegate.swift in Sources */,
 				02081D6823A0C37F00BBEC9E /* GifLoader.swift in Sources */,
 				025BF3F623AF81EF003BA972 /* ImagePicker.swift in Sources */,
-				022F6DDE22AF64DE00FADB75 /* IndustryVC.swift in Sources */,
+				022F6DDE22AF64DE00FADB75 /* Industries.swift in Sources */,
 				02DAA56B235945C800ADA45E /* Data.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

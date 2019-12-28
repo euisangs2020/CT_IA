@@ -129,7 +129,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6bg-O0-9kX">
-                                            <rect key="frame" x="82" y="-88" width="320" height="221"/>
+                                            <rect key="frame" x="82" y="-88.5" width="320" height="221"/>
                                         </pickerView>
                                     </subviews>
                                     <constraints>
@@ -272,10 +272,10 @@
             </objects>
             <point key="canvasLocation" x="770" y="-356"/>
         </scene>
-        <!--IndustriesTV Controller-->
+        <!--Industries-->
         <scene sceneID="YJU-NI-LK9">
             <objects>
-                <tableViewController storyboardIdentifier="IndustryTB_Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZlK-ce-YgP" customClass="IndustriesTV_Controller" customModule="CT_IA" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="IndustryTB_Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZlK-ce-YgP" customClass="Industries" customModule="CT_IA" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="9an-p3-k1R">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
