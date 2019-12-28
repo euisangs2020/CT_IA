@@ -1,0 +1,13 @@
+README FILE
+
+This project was built on XCode 10, and hence should be compatible with iOS 13.
+
+It has the following Pods:
+    pod 'Firebase/Core'
+    pod 'Firebase/Firestore'
+    pod 'Firebase/Analytics'
+    pod 'FirebaseUI/Storage'
+    pod 'Firebase/Storage'
+    pod 'Firebase/Database'
+    
+It can be run on a simulator of iOS 13, but requires the correct Google Authentication to access the specific Firesbase path. 
